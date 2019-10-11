@@ -9,3 +9,11 @@ class Image(md.Model):
     posted_on = md.DateTimeFiled(auto_now_add=True)
     def __str__():
         return f'{name}'
+
+class Likes(md.Model):
+    status = md.BooleanField(default=True)
+    image = md.ForeignKey(Image ,on_delete=md.CASCADE)
+    person = md.ForeignKey(User ,on_delete=md.CASCADE)
+
+    def __str__(self):
+        return '{} liked {}'.format(person.username, image)
