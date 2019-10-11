@@ -61,3 +61,11 @@ class Profile(md.Model):
     @receiver(post_save,sender=User)
     def save_user_profile(sender,instance,**kwargs):
         instance.profile.save()
+
+class follows(md.Model):
+    follow= md.ForeignKey(User ,on_delete=md.CASCADE , related_name='follows')
+    status=md.BooleanField(default=True)
+    following = md.ForeignKey(User ,on_delete=md.CASCADE, related_name='followed')
+
+    def __str__(self):
+        return f'{follow} follows {following}'
