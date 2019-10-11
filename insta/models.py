@@ -45,6 +45,7 @@ class Comment(md.Model):
     class Meta:
         ordering=['image']
 
+
 class Profile(md.Model):
     user = md.OneToOneField(User,on_delete=md.CASCADE)
     name = md.CharField(max_length = 100 ,blank = True)
