@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<div class="container">
+  <h3>Login</h3>
+  {% if form.errors %}
+    <p>{{form.errors}}</p>
+  {%endif%}
+  {{form.errors.all}}
+  {% for error in form.errors.all%}
+  <small class="text-danger">{{error}}</small>
+  {% endfor %}
+  <form method="post">
+  {% csrf_token%}
+  {{ form.as_p}}
+  <input type="hidden" name="next" value="{{next}}">
+  <input type="submit" name="" value="Sign Up">
+
+  </form>
+</div>
+{% endblock %}

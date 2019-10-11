@@ -9,9 +9,10 @@
 </head>
 <body>
   <div class="container-fluid">
-    <a href="/">Home</a>
-    <a href="/signup">Sign Up</a>
-    <a href="/login">Login </a>
+    <a href="{% url 'home'%}">Home</a>
+    <a href="{% url 'signup'%}">Sign Up</a>
+    <a href="{% url 'login'%}">Login </a>
+    <a href="{% url 'logout'%}">logout</a>
   </div>
   {% block content %}
 
