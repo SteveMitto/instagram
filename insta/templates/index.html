@@ -2,5 +2,12 @@
 
 {% block content%}
 
-<h2>Welcome</h2>
+<h2>Welcome {{user.username}}</h2>
+
+{%if user.profile.acount_stauts%}
+<p>Okay</p>
+{% else %}
+<p>Okayssss</p>
+{% endif %}
+
 {% endblock%}

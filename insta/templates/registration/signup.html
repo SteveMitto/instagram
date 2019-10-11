@@ -3,5 +3,13 @@
 {% block content%}
 <div class="container">
   <h3>Signup</h3>
+  {% if form.errors %}
+    <p>{{form.errors}}</p>
+  {%endif%}
+  <form class="" action="{% url 'signup'%}" method="post">
+  {% csrf_token%}
+  {{ form.as_p}}
+  <input type="submit" name="" value="Sign Up">
+  </form>
 </div>
 {% endblock %}
