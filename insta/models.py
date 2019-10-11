@@ -50,20 +50,23 @@ class Comment(md.Model):
 class Profile(md.Model):
     user = md.OneToOneField(User,on_delete=md.CASCADE)
     name = md.CharField(max_length = 100 ,blank = True)
-    profile_pic= md.ImageField(upload_to='profile/',default = 'default.jpg')
+    profile_pic= md.ImageField(upload_to='profile/',default = 'profile/     default.jpg')
     bio =  md.TextField(max_length=500,blank = True)
     acount_stauts= md.BooleanField(default = False ,blank = True)
 
     @receiver(post_save,sender=User)
     def create_user_profile(sender,instance,created, **kwargs):
         if created:
-            Profile.objects.create(user=instanse)
+            Profile.objects.create(user=instance)
 
     @receiver(post_save,sender=User)
     def save_user_profile(sender,instance,**kwargs):
         instance.profile.save()
 
-class follows(md.Model):
+    def __str__(self):
+        return f'{self.user.username}s profile'
+
+class Follow(md.Model):
     follow= md.ForeignKey(User ,on_delete=md.CASCADE , related_name='follows')
     status=md.BooleanField(default=True)
     following = md.ForeignKey(User ,on_delete=md.CASCADE, related_name='followed')
