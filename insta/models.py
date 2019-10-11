@@ -2,6 +2,7 @@ from django.db import models as md
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 class Tags(md.Model):
     tag = md.TextField()
 
@@ -16,7 +17,7 @@ class Image(md.Model):
     caption = md.TextField()
     profile = md.ForeignKey(User,on_delete=md.CASCADE)
     posted_on = md.DateTimeField(auto_now_add=True)
-    tags =md.ManyToManyField(Tags)
+    tags =md.ManyToManyField(Tags, blank = True)
     def __str__(self):
         return f'{self.name}'
 
