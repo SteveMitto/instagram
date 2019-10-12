@@ -1,0 +1,35 @@
+.top{
+  padding: 0 150px;
+  border:.5px rgba(0,0,0,.2) solid ;
+  border-width:0 0 .5px 0;
+}
+.row{
+  padding:15px;
+}
+.flexx1{
+  display: flex;
+  justify-content: space-space-between;
+  align-items: center;
+}
+.flexx2{
+  display: flex;
+  align-items:center;
+  justify-content:center;
+}
+.flexx2 input{
+  background-color: rgba(0,0,0,.04);
+  text-align: center;
+  font-weight: 40;
+  border:.5px rgba(0,0,0,.1) solid ;
+  height:25px;
+  border-radius:3px;
+  padding: 5px 0;
+}
+.flexx3{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.flexx3 a svg{
+  margin:0 0 0 30px;
+}

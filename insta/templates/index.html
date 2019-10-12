@@ -1,9 +1,9 @@
 {% extends 'base.html'%}
 
 {% block content%}
+{{block.super}}
 
 <h2>Welcome {{user.username}}</h2>
-
 {%if user.profile.acount_stauts%}
 <p>Okay</p>
 {% else %}
