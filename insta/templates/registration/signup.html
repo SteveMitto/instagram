@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load bootstrap4 %}
 {% block content%}
 <div class="container">
   <h3>Signup</h3>
@@ -8,7 +8,7 @@
   {%endif%}
   <form class="" action="{% url 'signup'%}" method="post">
   {% csrf_token%}
-  {{ form.as_p}}
+  {% bootstrap_form form|pristine %}
   <input type="submit" name="" value="Sign Up">
   </form>
 </div>
