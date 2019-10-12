@@ -68,9 +68,9 @@ class Profile(md.Model):
         return f'{self.user.username}s profile'
 
 class Follow(md.Model):
-    follow= md.ForeignKey(User ,on_delete=md.CASCADE , related_name='follows')
+    follow= md.ForeignKey(User ,on_delete=md.CASCADE , related_name='following')
     status=md.BooleanField(default=True)
-    following = md.ForeignKey(User ,on_delete=md.CASCADE, related_name='followed')
+    following = md.ForeignKey(User ,on_delete=md.CASCADE, related_name='followers')
 
     def __str__(self):
-        return f'{follow} follows {following}'
+        return f'{self.follow} follows {self.following}'
