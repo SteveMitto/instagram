@@ -52,6 +52,7 @@ class Profile(md.Model):
     name = md.CharField(max_length = 100 ,blank = True)
     profile_pic= md.ImageField(upload_to='profile/',default = 'profile/     default.jpg')
     bio =  md.TextField(max_length=500,blank = True)
+    website = md.URLField(blank = True)
     acount_stauts= md.BooleanField(default = False ,blank = True)
 
     @receiver(post_save,sender=User)
