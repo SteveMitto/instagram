@@ -1,6 +1,10 @@
+body{
+  background-color:rgba(0,0,0,.02);
+}
 .top{
+  background-color: white;
   padding: 0 150px;
-  border:.5px rgba(0,0,0,.2) solid ;
+  border:.5px rgba(0,0,0,.3) solid ;
   border-width:0 0 .5px 0;
 }
 .row{
@@ -17,7 +21,7 @@
   justify-content:center;
 }
 .flexx2 input{
-  background-color: rgba(0,0,0,.04);
+  background-color: rgba(0,0,0,.02);
   text-align: center;
   font-weight: 40;
   border:.5px rgba(0,0,0,.1) solid ;
