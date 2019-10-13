@@ -2,6 +2,8 @@
 {% load static%}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
 {{block.super}}
 <div class="container-fluid main">
   <div class="row">
@@ -10,25 +12,48 @@
     </div>
     <div class="col-md-6" style="padding:0 70px 0 0 ">
       <div class="items">
+        <input type="hidden" name="you" id="you" value="{{current_user.pk}}">
+        <input type="hidden" name="me" id="me" value="{{user.pk}}">
         <h1>{{current_user.username}}</h1>
         {% if user.pk == current_user.pk %}
-        <a href="#">
+        <a class="edit" href="#">
           <strong>Edit Profile</strong>
         </a>
         <button class="btn">
           <img src="{% static 'settings.png'%}" width="20px"alt="">
         </button >
+        {% else %}
+
+        {% for follower in followers %}
+          {% if user == follower.follow %}
+          <div class="data-follows">
+            <form id="unfollow">
+              {% csrf_token%}
+              <input type="hidden" name="you" id="you" value="{{current_user.pk}}">
+              <input type="hidden" name="me" id="me" value="{{user.pk}}">
+              <button type="submit" id="unfollow_btn" class="edit btn" name="button"> <strong>Unfollow</strong></button>
+            </form>
+        </div>
+
+
+          {% else %}
+
+          <button style="margin:0 10px;padding:5px 20px" class="btn btn-primary btn-sm follow" name="button"> <strong>Follow</strong></button>
+          {% endif %}
+          {% empty %}
+          <button style="margin:0 10px;padding:5px 20px" class="btn btn-primary btn-sm follow" name="button"> <strong>Follow</strong></button>
+          {% endfor %}
         {% endif %}
 
       </div><br>
       <div class="items2">
         <p> <strong> {{images |length}}</strong> post </p>
-        <p> <strong>{{followers.count}}</strong> followers </p>
-        <p> <strong>{{following.count}}</strong> following </p>
+        <p id="followers"> <strong>{{followers.count}}</strong> followers </p>
+        <p id="following"> <strong>{{following.count}}</strong> following </p>
       </div>
       <br>
       {% if current_user.profile.name%}
-      <h5>{{current_user.profile.name}}</h5>
+      <h6>{{current_user.profile.name}}</h6>
       {% else %}
         {% if current_user == user %}
         <p>Add a display name in settings</p>
@@ -76,9 +101,18 @@
   <div class="posts">
 
   {% for post in posts %}
-  <div class="my-items" style="margin-bottom:10px;background:url('{{post.image.url}}');height:100%;background-size:cover;background-position:center;">
-  <img src="{{post.image.url}}" class="card-img-top to-hide" alt="{{image.name}}" height="150px" width="">
-  </div>
+    {% if post.profile == current_user%}
+      <div class="my-items" style="margin-bottom:10px;background:url('{{post.image.url}}');height:100%;background-size:cover;background-position:center;">
+      <img src="{{post.image.url}}" class="card-img-top to-hide" alt="{{image.name}}" height="150px" width="">
+      </div>
+    {% else %}
+      {% if foorloop.last %}
+        <div class="col-md-12 empty">
+          <i class="fas fa-images"></i>
+          <h5>No Post</h5>
+        </div>
+      {% endif %}
+    {% endif %}
   {% empty %}
     <div class="col-md-12 empty">
       <i class="fas fa-images"></i>
@@ -91,4 +125,5 @@
 </div>
 </div>
 </div>
+<script type="text/javascript" src="{% static 'js/profile.js'%}"> </script>
 {% endblock %}

@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Image,Like,Comment,Profile,Tags,Follow
-
+from django.http import JsonResponse
 # Create your views here.
 def home(request):
     return render(request,'index.html')
@@ -35,3 +35,12 @@ def profile(request,username):
     'following':following
     }
     return render(request,'profile.html',context)
+
+def unfollow(request):
+    if request.method == 'POST':
+        me= request.POST['me']
+        you= request.POST['you']
+        unfollow = Follow.objects.filter(follow = me ,following = you).first()
+        unfollow.delete()
+        return JsonResponse({'unfollowed':True})
+    return redirect('home')
