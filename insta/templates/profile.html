@@ -37,11 +37,14 @@
 
 
           {% else %}
-
+          <div class="follow-data">
           <button style="margin:0 10px;padding:5px 20px" class="btn btn-primary btn-sm follow" name="button"> <strong>Follow</strong></button>
+        </div>
           {% endif %}
           {% empty %}
+          <div class="follow-data">
           <button style="margin:0 10px;padding:5px 20px" class="btn btn-primary btn-sm follow" name="button"> <strong>Follow</strong></button>
+        </div>
           {% endfor %}
         {% endif %}
 

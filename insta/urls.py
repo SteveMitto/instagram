@@ -6,7 +6,8 @@ urlpatterns = [
     path('',views.home ,name='home'),
     path('signup/',views.signup,name='signup'),
     path('<username>' , views.profile, name='profile'),
-    path('unfollow/', views.unfollow)
+    path('unfollow/', views.unfollow),
+    path('follow/',views.follow)
 ]
 
 if settings.DEBUG:

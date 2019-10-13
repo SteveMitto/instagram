@@ -44,3 +44,12 @@ def unfollow(request):
         unfollow.delete()
         return JsonResponse({'unfollowed':True})
     return redirect('home')
+
+def follow(request):
+    if request.method == 'POST':
+        me= request.POST['me']
+        you= request.POST['you']
+        follow = Follow(follow=User.objects.get(pk=me),following=User.objects.get(pk=you))
+        follow.save()
+        return JsonResponse({'followed':True})
+    return redirect('home')

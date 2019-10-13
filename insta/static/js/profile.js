@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  console.log = function() {}
   console.log('ready');
 $("#unfollow").submit(function(event){
   var you =$('#you').val()
@@ -8,7 +9,12 @@ $("#unfollow").submit(function(event){
     method:'POST',
     url:'unfollow/',
     data:form.serialize(),
-    dataType:'json'
+    dataType:'json',
+    data:{
+      'csrfmiddlewaretoken':csrftoken,
+      'me':$("#me").val(),
+      'you':$("#you").val()
+    }
   })
   .done(function(data){
     if (data.unfollowed){
@@ -22,4 +28,28 @@ $("#unfollow").submit(function(event){
   });
   event.preventDefault()
 });
+
+$(".follow").click(function(){
+  $.ajax({
+    method:'POST',
+    url:'follow/',
+    data:{
+      'csrfmiddlewaretoken':csrftoken,
+      'me':$("#me").val(),
+      'you':$("#you").val()
+    }
+  })
+  .done(function(data){
+    if (data.followed){
+      $(".follow-data").empty()
+      $(".follow-data").append(
+        '<form id="unfollow">'+
+          '<button type="submit" id="unfollow_btn" class="edit btn" name="button"> <strong>Unfollow</strong></button>'+
+        '</form>'
+      )
+      let followers = $("#followers strong").text()
+      $("#followers strong").text(parseInt(followers)+1)
+    }
+  })
+})
 })
