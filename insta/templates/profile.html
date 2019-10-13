@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{{block.super}}
+<div class="container-fluid main">
+  <div class="row">
+    <div class="col-md-4 offset-md-1 profile-pic-main">
+    <img src="{{current_user.profile.profile_pic.url}}" alt="{{current_user.profile.profile_pic.url}}" class="profile-pic">
+    </div>
+    <div class="col-md-6" style="padding:0 70px 0 0 ">
+      <div class="items">
+        <h1>{{current_user.username}}</h1>
+        {% if user.pk == current_user.pk %}
+        <a href="#">
+          <strong>Edit Profile</strong>
+        </a>
+        <button class="btn">
+          <img src="{% static 'settings.png'%}" width="20px"alt="">
+        </button >
+        {% endif %}
+
+      </div><br>
+      <div class="items2">
+        <p> <strong> {{images |length}}</strong> post </p>
+        <p> <strong>{{followers.count}}</strong> followers </p>
+        <p> <strong>{{following.count}}</strong> following </p>
+      </div>
+      <br>
+      {% if current_user.profile.name%}
+      <h5>{{current_user.profile.name}}</h5>
+      {% else %}
+        {% if current_user == user %}
+        <p>Add a display name in settings</p>
+        {% endif %}
+      {% endif %}
+      {% if current_user.profile.bio %}
+        {{current_user.profile.bio}}
+      {% else %}
+        {% if current_user == user  %}
+          <p class="text-disabled"> Add bio in edit profile</p>
+        {% else %}
+          <p>No Bio</p>
+        {% endif %}
+      {% endif %}
+      {% if current_user.profile.website%}
+        <a href="{{current_user.profile.website}}" target='_blank'>
+          {{current_user.profile.website}}
+        </a>
+      {% endif %}
+
+    </div>
+  </div>
+  <div class=" container-fluid data-parent">
+
+  <div class="row data-main">
+    <div class=" icons">
+
+    <small id="post">
+       <i class="fas fa-th"></i>
+         POST
+    </small>
+    <small id="igtv">
+      <img src="{% static 'igtv.png' %}" width="13px"alt="">
+        IGTV
+    </small>
+    <small id="saved">
+      <i class="far fa-bookmark"></i>
+        SAVED
+    </small>
+    <small id="tagged">
+  <i class="fas fa-user"></i>
+    TAGGED
+    </small>
+  </div>
+  <div class="posts">
+
+  {% for post in posts %}
+  <div class="my-items" style="margin-bottom:10px;background:url('{{post.image.url}}');height:100%;background-size:cover;background-position:center;">
+  <img src="{{post.image.url}}" class="card-img-top to-hide" alt="{{image.name}}" height="150px" width="">
+  </div>
+  {% empty %}
+    <div class="col-md-12 empty">
+      <i class="fas fa-images"></i>
+      <h5>No Post</h5>
+    </div>
+  {% endfor%}
+</div>
+
+
+</div>
+</div>
+</div>
+{% endblock %}
