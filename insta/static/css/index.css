@@ -1,0 +1,72 @@
+.main-row{
+  justify-content: center;
+}
+.card{
+  width:600px;
+  margin-bottom: 20px;
+}
+.card-header{
+  display:flex;
+  align-items:center;
+  background:white;
+}
+.card-header h6{
+  margin-left:20px;
+}
+.card-header h6 a{
+  color:black
+}
+.my-data{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.circle{
+  border: 2px solid lightgray;
+  border-radius: 50%;
+  padding:2px;
+}
+.my-data .user-details{
+  margin-left:10px;
+}
+.my-data .user-details h6{
+  margin-bottom: 0;
+}
+.my-data .user-details small{
+  color:gray;
+}
+.top-stack{
+  position: sticky;
+  top:100px;
+}
+.fa-heart,
+.fa-comment,
+.fa-bookmark{
+  font-size:25px;
+  margin:5px;
+}
+.icons{
+  padding:10px 20px;
+}
+.card-footer{
+  padding: 0;
+  background: white;
+}
+.card-footer form{
+  border:1px solid rgba(0,0,0,.05);
+  border-width:1px 0 0 0;
+  display: flex;
+}
+.card-footer form input{
+  width:90%;
+  height:50px;
+  padding:0 10px;
+  border:none;
+  outline:none;
+}
+.card-footer form button{
+  width:10%;
+  background-color:white;
+  border:none;
+  color:blue;
+  font-weight: bold;

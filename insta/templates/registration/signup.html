@@ -8,7 +8,7 @@
   {%endif%}
   <form class="" action="{% url 'signup'%}" method="post">
   {% csrf_token%}
-  {% bootstrap_form form|pristine %}
+  {% bootstrap_form form %}
   <input type="submit" name="" value="Sign Up">
   </form>
 </div>

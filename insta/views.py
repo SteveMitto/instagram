@@ -5,7 +5,14 @@ from .models import Image,Like,Comment,Profile,Tags,Follow
 from django.http import JsonResponse
 # Create your views here.
 def home(request):
-    return render(request,'index.html')
+    images=Image.objects.all()
+    following = Follow.objects.filter(follow = request.user)
+
+    context={
+    'images':images,
+    'following':following,
+    }
+    return render(request,'index.html',context)
 
 def signup(request):
     if request.method == 'POST':
