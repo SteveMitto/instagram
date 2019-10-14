@@ -7,10 +7,11 @@ from django.http import JsonResponse
 def home(request):
     images=Image.objects.all()
     following = Follow.objects.filter(follow = request.user)
-
+    likes = Like.objects.all()
     context={
     'images':images,
     'following':following,
+    'likes':likes
     }
     return render(request,'index.html',context)
 
@@ -30,7 +31,6 @@ def signup(request):
 
 def profile(request,username):
     current_user = User.objects.filter(username = username).first()
-    print(current_user.pk)
     images = Image.objects.all()
     following = Follow.objects.filter(follow = current_user)
     followers = Follow.objects.filter(following = current_user)
@@ -60,3 +60,18 @@ def follow(request):
         follow.save()
         return JsonResponse({'followed':True})
     return redirect('home')
+
+def like(request,img_id):
+    if request.method == 'GET':
+        image = Image.objects.get(pk=img_id)
+        already_liked = Like.objects.filter(person = request.user , image = image ).first()
+        print(image,'****************',already_liked)
+        if already_liked == None:
+            liked= Like( image = image, person = request.user)
+            liked.save()
+            return JsonResponse({'img_id':img_id,'status':True})
+        else:
+            already_liked.delete()
+            return JsonResponse({'img_id':img_id,'status':False})
+
+        print(already_liked)

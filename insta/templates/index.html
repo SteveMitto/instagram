@@ -6,10 +6,13 @@
   <div class="row main-row">
     <div class="col-md-7">
   <br><br>
+  <ul style="list-style:none">
   {% for post in images%}
     {% for person in following%}
       {% if post.profile == person.following %}
-      <div class="card">
+  <li>
+
+      <div class="card post{{post.pk}}">
         <div class="card-header">
             <img src="{{post.profile.profile.profile_pic.url}}" width="40px" alt="">
             <h6>
@@ -20,13 +23,37 @@
         </div>
         <img src="{{post.image.url}}" alt="" class="card-img-top" >
         <div class="card-footer">
-          <i class="far fa-heart"></i>
+          <div class="icons">
+              <i class="far fa-heart like-u">
+                  <input type="hidden" class="post_id" value="{{post.pk}}">
+              </i>
+          <!-- <i style="color:red;display:none;"class="fas fa-heart liked like-u"></i> -->
+          <i class="far fa-comment"></i>
+          <!-- <i class="fap fa-share"></i> -->
+          <i style=" float:right;"class="far fa-bookmark"></i>
+        </div>
+        <p class="likes" style="margin-left:20px">
+          <strong class="like_amount">{{post.likes}}</strong>
+          {% if post.likes == 1 %}
+          <strong>Like</strong>
+          {% else %}
+          <strong>Likes</strong>
+          {% endif %}
+        </p>
+
+          <form action="">
+            <input type="text" name="" value="" placeholder="Add a comment...">
+            <button type="submit" class="" >Post</button>
+
+          </form>
         </div>
       </div>
+    </li>
       {% endif %}
     {% empty %}
     {% endfor %}
   {% endfor %}
+</ul>
   </div>
   <div class="col-md-4">
     <br><br>
@@ -41,5 +68,5 @@
 </div>
 </div>
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
-
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
 {% endblock%}

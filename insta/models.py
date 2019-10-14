@@ -23,10 +23,15 @@ class Image(md.Model):
 
     class Meta:
         ordering=['name']
+
+    @property
+    def likes(self):
+        return self.image_likes.count()
+
 class Like(md.Model):
     status = md.BooleanField(default=True)
-    image = md.ForeignKey(Image ,on_delete=md.CASCADE)
-    person = md.ForeignKey(User ,on_delete=md.CASCADE)
+    image = md.ForeignKey(Image ,on_delete=md.CASCADE,related_name='image_likes')
+    person = md.ForeignKey(User ,on_delete=md.CASCADE,related_name='user_likes')
 
     def __str__(self):
         return '{} liked {}'.format(self.person.username, self.image)
