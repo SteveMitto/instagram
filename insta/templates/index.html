@@ -1,13 +1,45 @@
 {% extends 'base.html'%}
-
+{% load static %}
 {% block content%}
 {{block.super}}
-
-<h2>Welcome {{user.username}}</h2>
-{%if user.profile.acount_stauts%}
-<p>Okay</p>
-{% else %}
-<p>Okayssss</p>
-{% endif %}
+<div class="container">
+  <div class="row main-row">
+    <div class="col-md-7">
+  <br><br>
+  {% for post in images%}
+    {% for person in following%}
+      {% if post.profile == person.following %}
+      <div class="card">
+        <div class="card-header">
+            <img src="{{post.profile.profile.profile_pic.url}}" width="40px" alt="">
+            <h6>
+              <a href="{% url 'profile' post.profile %}">
+                {{post.profile}}
+              </a>
+            </h6>
+        </div>
+        <img src="{{post.image.url}}" alt="" class="card-img-top" >
+        <div class="card-footer">
+          <i class="far fa-heart"></i>
+        </div>
+      </div>
+      {% endif %}
+    {% empty %}
+    {% endfor %}
+  {% endfor %}
+  </div>
+  <div class="col-md-4">
+    <br><br>
+    <div class="my-data top-stack">
+    <img src="{{user.profile.profile_pic.url}}" width="50px" class="circle" alt="">
+    <div class="user-details">
+      <h6>{{user.username}}</h6>
+      <small>{{user.profile.name}}</small>
+    </div>
+    </div>
+  </div>
+</div>
+</div>
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
 
 {% endblock%}
