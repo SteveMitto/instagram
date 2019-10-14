@@ -8,7 +8,8 @@ urlpatterns = [
     path('<username>' , views.profile, name='profile'),
     path('unfollow/', views.unfollow),
     path('follow/',views.follow),
-    path('like/<img_id>',views.like ,name='like')
+    path('like/<img_id>',views.like ,name='like'),
+    path('comment/',views.comment,name='comment')
 ]
 
 if settings.DEBUG:

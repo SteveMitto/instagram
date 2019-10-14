@@ -41,7 +41,7 @@ class Like(md.Model):
 
 class Comment(md.Model):
     comment=md.TextField()
-    image = md.ForeignKey(Image,on_delete=md.CASCADE)
+    image = md.ForeignKey(Image,on_delete=md.CASCADE,related_name='image_comments')
     person = md.ForeignKey(User,on_delete=md.CASCADE)
     posted_on = md.DateTimeField(auto_now_add=True)
 

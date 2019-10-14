@@ -8,10 +8,12 @@ def home(request):
     images=Image.objects.all()
     following = Follow.objects.filter(follow = request.user)
     likes = Like.objects.all()
+    comments = Comment.objects.all()
     context={
     'images':images,
     'following':following,
-    'likes':likes
+    'likes':likes,
+    'comments':comments
     }
     return render(request,'index.html',context)
 
@@ -75,3 +77,11 @@ def like(request,img_id):
             return JsonResponse({'img_id':img_id,'status':False})
 
         print(already_liked)
+
+def comment(request):
+    if request.method == 'GET':
+        image = Image.objects.get(pk = request.GET['imageId'])
+        commnent = request.GET['comment']
+        comment_s = Comment(person = request.user,comment =commnent,image = image)
+        comment_s.save()
+        return JsonResponse({'image_id': request.GET['imageId'],'user':request.user.username,'comment':commnent})
