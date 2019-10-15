@@ -44,4 +44,11 @@ $(document).ready(function() {
     event.preventDefault()
 
   })
+  $('.upload-btn').click(function(){
+    $('.upload').css({'visibility':'visible'})
+  })
+  $('.upload .close').click(
+    function() {
+      $('.upload').css({'visibility':'hidden'})
+    })
 })

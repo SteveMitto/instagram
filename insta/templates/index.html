@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% load static %}
+{% load bootstrap4 %}
 {% block content%}
 {{block.super}}
 <div class="container">
@@ -14,7 +15,7 @@
 
       <div class="card post{{post.pk}}">
         <div class="card-header">
-            <img src="{{post.profile.profile.profile_pic.url}}" width="40px" alt="">
+            <img src="{{post.profile.profile.profile_pic.url}}" width="40px" height="40px" class="circle" alt="">
             <h6>
               <a href="{% url 'profile' post.profile %}">
                 {{post.profile}}
@@ -67,13 +68,26 @@
   <div class="col-md-4">
     <br><br>
     <div class="my-data top-stack">
-    <img src="{{user.profile.profile_pic.url}}" width="50px" class="circle" alt="">
+    <img src="{{user.profile.profile_pic.url}}" width="60px" height="60px" class="circle" alt="">
     <div class="user-details">
       <h6>{{user.username}}</h6>
       <small>{{user.profile.name}}</small>
     </div>
     </div>
   </div>
+</div>
+</div>
+<button type="button" class="upload-btn"> upload <i class="fas fa-photo"></i></button>
+<div class="upload">
+<br><br>
+<div class="form"><br><br><br>
+<small class="close">cancel</small>
+<form class="" action="{% url 'home' %}" method="post" enctype="multipart/form-data">
+  <br>
+  {% csrf_token%}
+  {% bootstrap_form form %}
+  <button type="submit" class="btn btn-primary btn-block">Upload</button>
+</form>
 </div>
 </div>
 <link rel="stylesheet" href="{% static 'css/index.css' %}">

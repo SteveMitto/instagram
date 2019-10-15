@@ -3,17 +3,29 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Image,Like,Comment,Profile,Tags,Follow
 from django.http import JsonResponse
-from .forms import UpdateProfile,UpdateProfilePhoto
+from .forms import UpdateProfile,UpdateProfilePhoto,PostImage
 # Create your views here.
 def home(request):
     images=Image.objects.all()
     following = Follow.objects.filter(follow = request.user)
     likes = Like.objects.all()
     comments = Comment.objects.all()
+    if request.method == "POST":
+        form = PostImage(request.POST,request.FILES)
+        if form.is_valid():
+            image_u =form.cleaned_data['image']
+            name =form.cleaned_data['name']
+            caption=form.cleaned_data['caption']
+            post = Image(image =image_u,name=name,caption = caption,profile = request.user)
+            post.save()
+            return redirect('home')
+    else:
+        form = PostImage()
     context={
     'images':images,
     'following':following,
     'likes':likes,
+    'form':form,
     'comments':comments
     }
     return render(request,'index.html',context)
