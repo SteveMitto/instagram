@@ -19,9 +19,27 @@
         <a class="edit" href="#">
           <strong>Edit Profile</strong>
         </a>
-        <button class="btn">
+        <button class="btn settings-btn">
           <img src="{% static 'settings.png'%}" width="20px"alt="">
         </button >
+        <div class="display-followers settings">
+          <div class="people text-center">
+              <h5>Settings</h5>
+              <hr>
+              <p>Change Password</p>
+              <hr>
+              <p>Privacy Security</p>
+              <hr>
+              <a href="{% url 'logout' %}">
+                Log Out
+                </a>
+              <hr>
+              <p class="text-center"
+              style="margin:0;color:blue;cursor:pointer"><small class="funga">
+                  cancel
+              </small></p>
+            </div>
+          </div>
         {% else %}
 
         {% for follower in followers %}
@@ -66,6 +84,10 @@
               {% endif %}
             </div>
             {% endfor %}
+            <p class="text-center"
+            style="margin:0;color:blue;cursor:pointer"><small class="funga">
+                cancel
+            </small></p>
         </div>
         </div>
         <p id="following"> <strong>{{following.count}}</strong> following </p>
@@ -83,6 +105,10 @@
               {% endif %}
             </div>
             {% endfor %}
+            <p class="text-center"
+            style="margin:0;color:blue;cursor:pointer"><small class="funga">
+                cancel
+            </small></p>
         </div>
         </div>
       </div>

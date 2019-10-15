@@ -7,9 +7,12 @@ $(document).ready(function() {
     $('.followers2').css({'visibility':'visible'})
 
   });
-  $('.display-followers').click(function(){
-    $(this).css({'visibility':'hidden'})
+  $('.display-followers .people .funga').click(function(){
+    $('.display-followers').css({'visibility':'hidden'})
 
+  })
+  $('.settings-btn').click(function(){
+    $('.settings').css({'visibility':'visible'})
   })
   console.log('ready');
   $("#unfollow").submit(function(event) {
