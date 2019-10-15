@@ -55,7 +55,7 @@ class Comment(md.Model):
 class Profile(md.Model):
     user = md.OneToOneField(User,on_delete=md.CASCADE)
     name = md.CharField(max_length = 100 ,blank = True)
-    profile_pic= md.ImageField(upload_to='profile/',default = 'profile/     default.jpg')
+    profile_pic= md.ImageField(upload_to='profile/',default = 'profile/default.jpg')
     bio =  md.TextField(max_length=500,blank = True)
     website = md.URLField(blank = True)
     acount_stauts= md.BooleanField(default = False ,blank = True)

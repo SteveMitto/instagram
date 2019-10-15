@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Image,Like,Comment,Profile,Tags,Follow
 from django.http import JsonResponse
+from .forms import UpdateProfile,UpdateProfilePhoto
 # Create your views here.
 def home(request):
     images=Image.objects.all()
@@ -85,3 +86,45 @@ def comment(request):
         comment_s = Comment(person = request.user,comment =commnent,image = image)
         comment_s.save()
         return JsonResponse({'image_id': request.GET['imageId'],'user':request.user.username,'comment':commnent})
+
+def update_profile(request,username):
+    if request.method == 'POST':
+        user = request.user
+        form = UpdateProfile(request.POST)
+        if form.is_valid():
+            name= form.cleaned_data['name']
+            bio= form.cleaned_data['bio']
+            website= form.cleaned_data['website']
+            profile = Profile.objects.get(pk = user.profile.pk)
+            profile.name = name
+            profile.bio = bio
+            profile.website = website
+            profile.user = user
+            print(profile)
+            profile.save()
+            return redirect('profile',username)
+    else:
+        form2 =UpdateProfilePhoto()
+        form = UpdateProfile()
+
+    context={
+    'form':form,
+    'form2':form2
+    }
+
+    return render(request,'edit-profile.html',context)
+def update_profile_pic(request,username):
+    if request.method == 'POST':
+        form =UpdateProfilePhoto(request.POST,request.FILES)
+        if form.is_valid():
+            # photo = form.save(commit = False)
+            # photo.user = request.user
+            photo = form.cleaned_data['profile_pic']
+            profile = Profile.objects.get(pk = request.user.profile.pk)
+            profile.profile_pic = photo
+            profile.save()
+            print(photo)
+
+            return redirect('profile',username)
+    else:
+            return redirect('profile',username)

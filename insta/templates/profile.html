@@ -16,7 +16,7 @@
         <input type="hidden" name="me" id="me" value="{{user.pk}}">
         <h1>{{current_user.username}}</h1>
         {% if user.pk == current_user.pk %}
-        <a class="edit" href="#">
+        <a class="edit" href="{% url 'update_profile' user.username %}">
           <strong>Edit Profile</strong>
         </a>
         <button class="btn settings-btn">
@@ -130,7 +130,8 @@
         {% endif %}
       {% endif %}
       {% if current_user.profile.website%}
-        <a href="{{current_user.profile.website}}" target='_blank'>
+      <br><br>
+        <a style="color:darkblue;text-decoration:none" href="{{current_user.profile.website}}" target='_blank'>
           {{current_user.profile.website}}
         </a>
       {% endif %}
