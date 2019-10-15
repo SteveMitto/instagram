@@ -88,3 +88,32 @@ align-items: center;
   width:30%;
   margin-left: 10px;
 }
+.display-followers{
+  position:fixed;
+  top:0;
+  left:0;
+  height:100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+}
+.people{
+  background: white;
+  width:40%;
+  padding: 20px;
+  border:.01px solid black;
+  border-radius: 15px;
+  max-height: 50vh;
+  overflow: auto;
+}
+.circle{
+  border-radius: 50%;
+  margin-right:10px;
+}
+#followers,
+#following{
+  cursor: pointer;
+}
