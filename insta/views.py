@@ -177,7 +177,7 @@ def search(request,search_term):
         }
         res.append(data)
     if res:
-        return JsonResponse({results':res})
+        return JsonResponse({'results':res})
     else:
         return JsonResponse({'notFound':True,'results':res})
 
