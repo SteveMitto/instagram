@@ -14,13 +14,21 @@ $(document).ready(function() {
     $("span.loader").hide()
     $.ajax({
       method:'GET',
-      url:'search/'+term+'',
+      url:'/search/'+term+'',
+      statusCode:{
+        404:function(){
+          $('.search-results').hide()
+        },
+      }
       })
       .done(function(data){
         res =data.results
         $('.search-results').empty()
-        if (res == []){
-            $('.search-results').hide()
+        if (data.notFound ){
+
+            $('.search-results').append(
+              '<h6 class="text-center">' +term+' has no account <h6>'
+            )
         }else{
 
         for(i=0;i<res.length;i++){
@@ -51,7 +59,7 @@ $(document).ready(function() {
     var clicked = $(this)
     console.log(clicked);
     var post_id = clicked.find($('.post_id'))
-    $.get('like/' + post_id.val() + '',
+    $.get('/like/' + post_id.val() + '',
       function(data) {
         console.log(data);
         if (data.status) {
@@ -74,7 +82,7 @@ $(document).ready(function() {
     console.log(comment.val());
     $.ajax({
       method:'GET',
-      url:'comment/',
+      url:'/comment/',
       data:{
         'comment':comment.val(),
         'imageId':imageId.val()

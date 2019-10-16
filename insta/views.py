@@ -176,7 +176,10 @@ def search(request,search_term):
         'name':name
         }
         res.append(data)
-    return JsonResponse({'results':res})
+    if res:
+        return JsonResponse({results':res})
+    else:
+        return JsonResponse({'notFound':True,'results':res})
 
 def post_details(request,id):
     image = get_object_or_404(Image,pk = id)
