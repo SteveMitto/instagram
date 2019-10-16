@@ -63,7 +63,7 @@
 
       </div><br>
       <div class="items2">
-        <p> <strong> {{images |length}}</strong> post </p>
+        <p> <strong> {{posts.count}}</strong> post </p>
         <p id="followers"> <strong>{{followers|length}}</strong> followers </p>
         <div class="display-followers followers1">
           <div class="people">
@@ -120,7 +120,9 @@
         {% endif %}
       {% endif %}
       {% if current_user.profile.bio %}
+      <small>
         {{current_user.profile.bio}}
+      </small>
       {% else %}
         {% if current_user == user  %}
           <p class="text-disabled"> Add bio in edit profile</p>
@@ -162,18 +164,15 @@
   <div class="posts">
 
   {% for post in posts %}
-    {% if post.profile == current_user%}
       <div class="my-items" style="margin-bottom:10px;background:url('{{post.image.url}}');height:100%;background-size:cover;background-position:center;">
       <img src="{{post.image.url}}" class="card-img-top to-hide" alt="{{image.name}}" height="90px" width="">
       </div>
-    {% else %}
       {% if foorloop.last %}
         <div class="col-md-12 empty">
           <i class="fas fa-images"></i>
           <h5>No Post</h5>
         </div>
       {% endif %}
-    {% endif %}
   {% empty %}
     <div class="col-md-12 empty">
       <i class="fas fa-images"></i>

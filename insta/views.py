@@ -53,7 +53,7 @@ def signup(request):
 @login_required
 def profile(request,username):
     current_user = User.objects.filter(username = username).first()
-    images = Image.objects.all()
+    images = Image.objects.filter(profile = current_user )
     try:
         following = Follow.objects.filter(follow = current_user).all()
     except:
