@@ -36,7 +36,6 @@ def home(request):
     return render(request,'index.html',context)
 
 
-@login_required
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)

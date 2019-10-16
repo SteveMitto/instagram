@@ -2,9 +2,31 @@
 {% load bootstrap4 %}
 {% block content%}
 {% if user.is_authenticated%}
-  
-{% else %}
 
+{% else %}
+<style media="screen">
+  li{
+    display:none
+  }
+  body{
+    background-image:url('https://static.independent.co.uk/s3fs-public/thumbnails/image/2019/07/18/11/instagram-likes-count-hidden-removed-.jpg?w968');
+    background-size:cover;
+    background-repeat:no-repeat;
+    height:100vh;
+  }
+  .col-md-6 {
+    /* background-image:url('https://static.independent.co.uk/s3fs-public/thumbnails/image/2019/07/18/11/instagram-likes-count-hidden-removed-.jpg?w968') */
+    background:rgba(255,255,255,.87);
+    padding:50px;
+    display:flex;
+    justify-content:center;
+    flex-direction:column;
+  }
+  .col-md-6 img,.col-md-6.btn,.col-md-6 small{
+  align-self:center;
+  }
+
+</style>
 <div class="container">
   {% if form.errors %}
     <p>{{form.errors}}</p>
@@ -14,7 +36,9 @@
   <small class="text-danger">{{error}}</small>
   {% endfor %}
   <div class="row">
-  <div class="col-md-4 offset-md-4">
+  <div class="col-md-6 offset-md-3">
+    <img style="margin-top:10px" alt="Instagram" class="s4Iyt" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" srcset="/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png 2x">
+
     <h3>Login</h3>
 
   <form method="post">
@@ -24,6 +48,9 @@
   <input type="submit" class="btn btn-primary btn-sm btn-block" name="" value="Login">
 
   </form>
+  <small class="text-center">Dont have an account <br>
+    <a href="{% url 'signup' %}">Sign Up</a>
+  </small>
 </div>
 </div>
 </div>
