@@ -36,6 +36,7 @@ def home(request):
     return render(request,'index.html',context)
 
 
+@login_required
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -50,6 +51,7 @@ def signup(request):
     }
     return render(request,'registration/signup.html', context)
 
+@login_required
 def profile(request,username):
     current_user = User.objects.filter(username = username).first()
     images = Image.objects.all()
@@ -163,6 +165,7 @@ def update_profile_pic(request,username):
     else:
             return redirect('profile',username)
 
+@login_required
 def search(request,search_term):
     results = list(User.objects.filter(username__icontains = search_term))
     res=[]
@@ -181,6 +184,7 @@ def search(request,search_term):
     else:
         return JsonResponse({'notFound':True,'results':res})
 
+@login_required
 def post_details(request,id):
     image = get_object_or_404(Image,pk = id)
     return render(request, 'image-details.html',{'post':image})
