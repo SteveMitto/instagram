@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{block.super}}
+<style>
+  .details{
+    padding-top:120px;
+    height:70vh;
+    width:70vw;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+  .col-md-5 .post_comments{
+    max-height:200px;
+  }
+  .col-md-7,.col-md-5{
+    padding:0;
+  }
+  .col-md-7{
+    max-height:70%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+  }
+  .col-md-7::before{
+    content:'';
+    position:absolute;
+    height:100%;
+    width:100%;
+    background-image:url('{{post.image.url}}');
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-position:center;
+    z-index:-999;
+    filter:blur(4px)
+  }
+  .row{
+    height:70%;
+  }
+
+</style>
+<div class="container details post{{post.id}}">
+    <ul style="list-style:none">
+      <li>
+        <div class="row ">
+    <div class="col-md-7" >
+
+            <img src="{{post.image.url}}" alt="" class="card-img-top">
+
+          </div>
+          <div class="col-md-5 " >
+            <div class="card-header">
+              <img src="{{post.profile.profile.profile_pic.url}}" width="40px" height="40px" class="circle" alt="">
+              <h6>
+                <a href="{% url 'profile' post.profile %}">
+                  {{post.profile}}
+                </a>
+              </h6>
+            </div>
+          <div class="icons">
+            <i class="far fa-heart like-u" style="cursor:pointer">
+              <input type="hidden" class="post_id" value="{{post.pk}}">
+            </i>
+            <a href="#" style="color:black;text-decoration :none">
+              <i class="far fa-comment"></i>
+            </a>
+            <i style=" float:right;" class="far fa-bookmark"></i>
+          </div>
+          <div class="card-footer">
+            <p class="likes" style="margin-left:20px">
+              <strong class="like_amount">{{post.likes}}</strong>
+              {% if post.likes == 1 %}
+              <strong>Like</strong>
+              {% else %}
+              <strong>Likes</strong>
+              {% endif %}
+            </p>
+            <div class="post_comments{{post.id}} post_comments" style="padding-left:20px;overflow-y:scroll">
+
+            {% for  comment in post.image_comments.all%}
+            <p> <strong>
+              <a href="/{{comment.person.username}}" style="color:black;text-decoration:none;">
+              {{ comment.person.username}}
+              </a>
+            </strong>
+              {{ comment.comment}}<br>
+              <small style="color:gray">{{ comment.posted_on |timesince}}</small></p>
+            {% endfor  %}
+            </div>
+            <form class="comment-form">
+              <input type="text" name="comment" class="comment" placeholder="Add a comment...">
+              <input type="hidden" name="imageId" class="imageId" value="{{post.pk}}">
+              <button type="submit">Post</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+        </li>
+      </ul>
+</div>
+{% endblock %}

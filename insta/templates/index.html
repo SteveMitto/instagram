@@ -6,90 +6,93 @@
 <div class="container">
   <div class="row main-row">
     <div class="col-md-7">
-  <br><br>
-  <ul style="list-style:none">
-  {% for post in images%}
-    {% for person in following%}
-      {% if post.profile == person.following %}
-  <li>
+      <br><br>
+      <ul style="list-style:none">
+        {% for post in images%}
+        {% for person in following%}
+        {% if post.profile == person.following %}
+        <li>
 
-      <div class="card post{{post.pk}}">
-        <div class="card-header">
-            <img src="{{post.profile.profile.profile_pic.url}}" width="40px" height="40px" class="circle" alt="">
-            <h6>
-              <a href="{% url 'profile' post.profile %}">
-                {{post.profile}}
-              </a>
-            </h6>
-        </div>
-        <img src="{{post.image.url}}" alt="" class="card-img-top" >
-        <div class="card-footer">
-          <div class="icons">
-              <i class="far fa-heart like-u">
-                  <input type="hidden" class="post_id" value="{{post.pk}}">
-              </i>
-          <!-- <i style="color:red;display:none;"class="fas fa-heart liked like-u"></i> -->
-          <i class="far fa-comment"></i>
-          <!-- <i class="fap fa-share"></i> -->
-          <i style=" float:right;"class="far fa-bookmark"></i>
-        </div>
-        <p class="likes" style="margin-left:20px">
-          <strong class="like_amount">{{post.likes}}</strong>
-          {% if post.likes == 1 %}
-          <strong>Like</strong>
-          {% else %}
-          <strong>Likes</strong>
-          {% endif %}
-        </p>
-        <div style="padding-left:20px" class="post_comments{{post.id}}">
-
-            {% for comment in post.image_comments.all%}
-              <p> <strong>{{comment.person.username}}</strong>
-                {{comment.comment}}<br>
-                <small style="color:gray">{{comment.posted_on | timesince}}</small>
-              </p>
-            {% empty %}
-              {% endfor %}
+          <div class="card post{{post.pk}}">
+            <div class="card-header">
+              <img src="{{post.profile.profile.profile_pic.url}}" width="40px" height="40px" class="circle" alt="">
+              <h6>
+                <a href="{% url 'profile' post.profile %}">
+                  {{post.profile}}
+                </a>
+              </h6>
             </div>
-          <form class="comment-form">
-            <input type="text" name="comment" class="comment" placeholder="Add a comment...">
-            <input type="hidden" name="imageId" class="imageId" value="{{post.pk}}" >
-            <button type="submit">Post</button>
-          </form>
+            <img src="{{post.image.url}}" alt="" class="card-img-top">
+            <div class="card-footer">
+              <div class="icons">
+                <i class="far fa-heart like-u" style="cursor:pointer">
+                  <input type="hidden" class="post_id" value="{{post.pk}}">
+                </i>
+                <a href="{% url 'post_details' post.pk %}" style="color:black;text-decoration :none">
+                  <i class="far fa-comment"></i>
+                </a>
+                <i style=" float:right;" class="far fa-bookmark"></i>
+              </div>
+              <p class="likes" style="margin-left:20px">
+                <strong class="like_amount">{{post.likes}}</strong>
+                {% if post.likes == 1 %}
+                <strong>Like</strong>
+                {% else %}
+                <strong>Likes</strong>
+                {% endif %}
+              </p>
+              <div style="padding-left:20px" class="post_comments{{post.id}}">
+                {% if  post.image_comments.all.count > 1 %}
+                <small>
+                  <a href="{% url 'post_details' post.pk %}" style="color:gray;text-decoration :none">
+                    View all {{ post.image_comments.all.count}} comments
+                  </a>
+                </small>
+                {% endif %}
+                {% if  post.image_comments.all.count >= 1 %}
+                <p> <strong>{{ post.image_comments.last.person.username}}</strong>
+                  {{ post.image_comments.last.comment}}<br>
+                  <small style="color:gray">{{ post.image_comments.last.posted_on |timesince}}</small>
+                </p>
+                {% endif %}
+              </div>
+              <form class="comment-form">
+                <input type="text" name="comment" class="comment" placeholder="Add a comment...">
+                <input type="hidden" name="imageId" class="imageId" value="{{post.pk}}">
+                <button type="submit">Post</button>
+              </form>
+            </div>
+          </div>
+        </li>
+        {% endif %}
+        {% empty %}
+        {% endfor %}
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <br><br>
+      <div class="my-data top-stack" style="z-index:-9999">
+        <img src="{{user.profile.profile_pic.url}}" width="60px" height="60px" class="circle" alt="">
+        <div class="user-details">
+          <h6>{{user.username}}</h6>
+          <small>{{user.profile.name}}</small>
         </div>
       </div>
-    </li>
-      {% endif %}
-    {% empty %}
-    {% endfor %}
-  {% endfor %}
-</ul>
-  </div>
-  <div class="col-md-4">
-    <br><br>
-    <div class="my-data top-stack">
-    <img src="{{user.profile.profile_pic.url}}" width="60px" height="60px" class="circle" alt="">
-    <div class="user-details">
-      <h6>{{user.username}}</h6>
-      <small>{{user.profile.name}}</small>
-    </div>
     </div>
   </div>
 </div>
+<button type="button" class="btn btn-primary btn-sm upload-btn"> upload <i class="fas fa-photo"></i></button>
+<div class="upload ">
+  <br><br>
+  <div class="form"><br><br><br>
+    <small class="close">cancel</small>
+    <form class="" action="{% url 'home' %}" method="post" enctype="multipart/form-data">
+      <br>
+      {% csrf_token%}
+      {% bootstrap_form form %}
+      <button type="submit" class="btn btn-primary btn-block">Upload</button>
+    </form>
+  </div>
 </div>
-<button type="button" class="upload-btn"> upload <i class="fas fa-photo"></i></button>
-<div class="upload">
-<br><br>
-<div class="form"><br><br><br>
-<small class="close">cancel</small>
-<form class="" action="{% url 'home' %}" method="post" enctype="multipart/form-data">
-  <br>
-  {% csrf_token%}
-  {% bootstrap_form form %}
-  <button type="submit" class="btn btn-primary btn-block">Upload</button>
-</form>
-</div>
-</div>
-<link rel="stylesheet" href="{% static 'css/index.css' %}">
-<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
 {% endblock%}

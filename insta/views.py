@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Image,Like,Comment,Profile,Tags,Follow
@@ -177,3 +177,7 @@ def search(request,search_term):
         }
         res.append(data)
     return JsonResponse({'results':res})
+
+def post_details(request,id):
+    image = get_object_or_404(Image,pk = id)
+    return render(request, 'image-details.html',{'post':image})

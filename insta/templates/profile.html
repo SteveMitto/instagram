@@ -41,16 +41,11 @@
             </div>
           </div>
         {% else %}
-
         {% for follower in followers %}
-          {% if user == follower.follow %}
+
+          {% if user == follower.follow%}
           <div class="data-follows">
-            <form id="unfollow">
-              {% csrf_token%}
-              <input type="hidden" name="you" id="you" value="{{current_user.pk}}">
-              <input type="hidden" name="me" id="me" value="{{user.pk}}">
-              <button type="submit" id="unfollow_btn" class="edit btn" name="button"> <strong>Unfollow</strong></button>
-            </form>
+              <button type="submit" id="unfollow" class="unfollow edit btn" > <strong>Unfollow</strong></button>
         </div>
 
 
@@ -69,20 +64,22 @@
       </div><br>
       <div class="items2">
         <p> <strong> {{images |length}}</strong> post </p>
-        <p id="followers"> <strong>{{followers.count}}</strong> followers </p>
+        <p id="followers"> <strong>{{followers|length}}</strong> followers </p>
         <div class="display-followers followers1">
           <div class="people">
             <h5 class="text-center">Followers</h5>
             <hr>
             {% for person in followers %}
             <div class="people-data" style="width:100%;display:flex;align-items:center;">
-              <img src="{{person.follow.profile.profile_pic.url}}" width="40px" class="circle" alt="">
+              <img src="{{person.follow.profile.profile_pic.url}}" height="40px" width="40px" class="circle" alt="">
               <p>{{person.follow.username}}</p>
                 {% if user != person.follow %}
               <button type="button" class="btn btn-primary btn-sm " style="align-self:" name="button"> <strong>Follow</strong></button>
               {% else %}
               {% endif %}
             </div>
+            {% empty %}
+            <p>{{current_user.username| title }} has no followers</p>
             {% endfor %}
             <p class="text-center"
             style="margin:0;color:blue;cursor:pointer"><small class="funga">
@@ -104,6 +101,8 @@
               {% else %}
               {% endif %}
             </div>
+            {% empty %}
+            <p>{{current_user.username| title }} has no followers</p>
             {% endfor %}
             <p class="text-center"
             style="margin:0;color:blue;cursor:pointer"><small class="funga">
@@ -165,7 +164,7 @@
   {% for post in posts %}
     {% if post.profile == current_user%}
       <div class="my-items" style="margin-bottom:10px;background:url('{{post.image.url}}');height:100%;background-size:cover;background-position:center;">
-      <img src="{{post.image.url}}" class="card-img-top to-hide" alt="{{image.name}}" height="150px" width="">
+      <img src="{{post.image.url}}" class="card-img-top to-hide" alt="{{image.name}}" height="90px" width="">
       </div>
     {% else %}
       {% if foorloop.last %}
