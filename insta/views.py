@@ -8,6 +8,7 @@ from .forms import UpdateProfile,UpdateProfilePhoto,PostImage
 from django.contrib.auth.decorators import login_required
 from django import template
 import json
+import random
 register = template.Library()
 @login_required
 def home(request):
@@ -15,6 +16,12 @@ def home(request):
     following = Follow.objects.filter(follow = request.user)
     likes = Like.objects.all()
     comments = Comment.objects.all()
+    try:
+        profiles =list(Profile.objects.all().exclude(user = request.user))
+        all_profiles = random.sample(profiles,3)
+    except ValueError:
+        all_profiles =Profile.objects.all().exclude(user = request.user)
+
     if request.method == "POST":
         form = PostImage(request.POST,request.FILES)
         if form.is_valid():
@@ -27,6 +34,7 @@ def home(request):
     else:
         form = PostImage()
     context={
+    'profiles':all_profiles,
     'images':images,
     'following':following,
     'likes':likes,

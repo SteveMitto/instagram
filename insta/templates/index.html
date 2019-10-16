@@ -9,8 +9,6 @@
       <br><br>
       <ul style="list-style:none">
         {% for post in images%}
-        {% for person in following%}
-        {% if post.profile == person.following %}
         <li>
 
           <div class="card post{{post.pk}}">
@@ -64,21 +62,38 @@
             </div>
           </div>
         </li>
-        {% endif %}
         {% empty %}
-        {% endfor %}
         {% endfor %}
       </ul>
     </div>
     <div class="col-md-4">
       <br><br>
-      <div class="my-data top-stack" style="z-index:-9999">
+      <div class="top-stack">
+
+      <div class="my-data" style="width:100%;margin-left:57px;">
         <img src="{{user.profile.profile_pic.url}}" width="60px" height="60px" class="circle" alt="">
         <div class="user-details">
           <h6>{{user.username}}</h6>
           <small>{{user.profile.name}}</small>
         </div>
       </div>
+      <div class="users">
+        <small style="color:gray"><h6>Discovery</h6></small>
+      {% for profile in profiles %}
+      <div class="my-data data2">
+
+      <img src="{{profile.profile_pic.url}}" width="40px" height="40px" class="circle" alt="">
+      <div class="user-details">
+        <small class="small">
+          <a href="/{{profile.user.username}}">View</a>
+        </small>
+        <h6>{{profile.user.username}}</h6>
+        <small>{{profile.name}}</small>
+      </div>
+    </div>
+      {% endfor %}
+    </div>
+    </div>
     </div>
   </div>
 </div>
