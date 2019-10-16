@@ -1,4 +1,11 @@
 $(document).ready(function() {
+$(document).ajaxStart(function(){
+  $('.background-loader').show()
+
+})
+$(document).ajaxStop(function(){
+  $(' .background-loader').hide()
+})
   $('body').click(function(){
     $('.search-results').slideUp(300)
   })
@@ -10,11 +17,11 @@ $(document).ready(function() {
     searchInterval = setInterval(function(){
 
     term = $("#search").val()
-    console.log(term);
     $("span.loader").hide()
     $.ajax({
       method:'GET',
       url:'/search/'+term+'',
+      global:false,
       statusCode:{
         404:function(){
           $('.search-results').hide()
@@ -48,8 +55,6 @@ $(document).ready(function() {
       }
     }
           $('.search-results').slideDown(300)
-        console.log('data.results');
-        console.table(data.results);
       })
       clearInterval(searchInterval)
     },500)
@@ -57,21 +62,17 @@ $(document).ready(function() {
 
   $("ul li .like-u").click(function() {
     var clicked = $(this)
-    console.log(clicked);
     var post_id = clicked.find($('.post_id'))
     $.get('/like/' + post_id.val() + '',
       function(data) {
-        console.log(data);
         if (data.status) {
           clicked.css({'color': 'red'})
           likes = $(".post"+data.img_id+" .likes .like_amount").text()
-          console.log(likes);
           $(".post"+data.img_id+" .likes .like_amount").text(parseInt(likes)+1)
         } else {
           clicked.css({'color': 'black'})
           likes = $(".post"+data.img_id+" .likes .like_amount").text()
           $(".post"+data.img_id+" .likes .like_amount").text(parseInt(likes)-1)
-          console.log(likes);
         }
       })
   })
@@ -79,7 +80,6 @@ $(document).ready(function() {
   $(".comment-form").submit(function(event){
     imageId = $(this).find($('.imageId'))
     comment = $(this).find($('.comment'))
-    console.log(comment.val());
     $.ajax({
       method:'GET',
       url:'/comment/',
@@ -95,7 +95,7 @@ $(document).ready(function() {
         '</p>'
       )
     })
-    $('.comment').val(' ')
+    comment.val('')
     event.preventDefault()
 
   })

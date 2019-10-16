@@ -1,7 +1,13 @@
 $(document).ready(function() {
+  to_delete=[]
   $('#followers').click(function() {
     $('.followers1').css({'visibility':'visible'})
-
+    if (to_delete != []){
+    for(i=0;i<to_delete.length;i++){
+      $(".followers1 .people").remove(".person"+to_delete[i]+"")
+    }
+  }else{
+  }
   });
   $('#following').click(function() {
     $('.followers2').css({'visibility':'visible'})
@@ -14,7 +20,6 @@ $(document).ready(function() {
   $('.settings-btn').click(function(){
     $('.settings').css({'visibility':'visible'})
   })
-  console.log('ready');
   $(".unfollow").click(function() {
     var you = $('#you').val()
     var me = $('#me').val()
@@ -32,12 +37,14 @@ $(document).ready(function() {
       })
       .done(function(data) {
         if (data.unfollowed) {
-          $(".data-follows").empty()
-          $(".data-follows").append(
-            '<button style="margin:0 10px;padding:5px 20px" class="btn btn-primary btn-sm follow" name="button"> <strong>Follow</strong></button>'
-          )
+          $('.unfollow').hide()
+          $('.follow').delay(100).show()
           followers = $("#followers strong").text()
           $("#followers strong").text(parseInt(followers) - 1)
+          if(to_delete.includes(parseInt(me))){
+          }else{
+            to_delete.push(parseInt(me))
+          }
         }
       });
   });
@@ -54,10 +61,11 @@ $(document).ready(function() {
       })
       .done(function(data) {
         if (data.followed) {
-          $(".follow-data").empty()
-          $(".follow-data").append(
-            '<button type="submit" id="unfollow" class=" unfollow edit btn" name="button"> <strong>Unfollow</strong></button>'
-          )
+          $('.follow').hide()
+          $('.unfollow').delay(100).show()
+          if(to_delete.includes(parseInt($("#me").val()))){
+            to_delete.pop(parseInt(me))
+          }
           let followers = $("#followers strong").text()
           $("#followers strong").text(parseInt(followers) + 1)
         }

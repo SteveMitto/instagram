@@ -41,24 +41,19 @@
             </div>
           </div>
         {% else %}
-        {% for follower in followers %}
+        {% if follow_status%}
+        <div class="data-follows">
+            <button type="submit" id="unfollow" class="unfollow edit btn-sm btn" > <strong>Unfollow</strong></button>
+            <button style="margin:0 10px;padding:5px 20px;display:none" class="btn btn-primary btn-sm follow unfollow-f" name="button"> <strong>Follow</strong></button>
 
-          {% if user == follower.follow%}
-          <div class="data-follows">
-              <button type="submit" id="unfollow" class="unfollow edit btn" > <strong>Unfollow</strong></button>
-        </div>
+      </div>
+        {% else %}
+        <div class="follow-data">
+        <button style="margin:0 10px;padding:5px 20px" class="btn btn-primary btn-sm follow" name="button"> <strong>Follow</strong></button>
+        <button type="submit" style="display:none;"id="unfollow" class="unfollow edit btn-sm btn" > <strong>Unfollow</strong></button>
+      </div>
+        {% endif %}
 
-
-          {% else %}
-          <div class="follow-data">
-          <button style="margin:0 10px;padding:5px 20px" class="btn btn-primary btn-sm follow" name="button"> <strong>Follow</strong></button>
-        </div>
-          {% endif %}
-          {% empty %}
-          <div class="follow-data">
-          <button style="margin:0 10px;padding:5px 20px" class="btn btn-primary btn-sm follow" name="button"> <strong>Follow</strong></button>
-        </div>
-          {% endfor %}
         {% endif %}
 
       </div><br>
@@ -70,13 +65,10 @@
             <h5 class="text-center">Followers</h5>
             <hr>
             {% for person in followers %}
-            <div class="people-data" style="width:100%;display:flex;align-items:center;">
+            <div class="people-data person{{person.follow.id}}" style="width:100%;display:flex;align-items:center;">
               <img src="{{person.follow.profile.profile_pic.url}}" height="40px" width="40px" class="circle" alt="">
               <p>{{person.follow.username}}</p>
-                {% if user != person.follow %}
-              <button type="button" class="btn btn-primary btn-sm " style="align-self:" name="button"> <strong>Follow</strong></button>
-              {% else %}
-              {% endif %}
+                <a href="/{{person.follow.username}}"> <strong>view</strong></a>
             </div>
             {% empty %}
             <p>{{current_user.username| title }} has no followers</p>
@@ -94,12 +86,9 @@
             <hr>
             {% for person in following %}
             <div class="people-data" style="width:100%;display:flex;align-items:center;">
-              <img src="{{person.following.profile.profile_pic.url}}" width="40px" class="circle" alt="">
+              <img src="{{person.following.profile.profile_pic.url}}" height="40px" width="40px" class="circle" alt="">
               <p>{{person.following.username}}</p>
-                {% if user != person.following %}
-              <button type="button" class="btn btn-primary btn-sm " style="align-self:" name="button"> <strong>Follow</strong></button>
-              {% else %}
-              {% endif %}
+              <a href="/{{person.following.username}}"> <strong>view</strong></a>
             </div>
             {% empty %}
             <p>{{current_user.username| title }} has no followers</p>
@@ -164,9 +153,16 @@
   <div class="posts">
 
   {% for post in posts %}
+
       <div class="my-items" style="margin-bottom:10px;background:url('{{post.image.url}}');height:100%;background-size:cover;background-position:center;">
-      <img src="{{post.image.url}}" class="card-img-top to-hide" alt="{{image.name}}" height="90px" width="">
-      </div>
+      <img src="{{post.image.url}}" class="card-img-top to-hide" alt="{{image.name}}" height="90px" width="200px">
+      <a href="{% url 'post_details' post.pk %}" style="color:gray;text-decoration :none">
+  <div class="content" href="{% url 'post_details' post.pk %}">
+    <i class="fas fa-heart"></i><span>{{post.likes}}</span><i class="fas fa-comment"></i><span>{{post.image_comments.all.count}}</span>
+
+  </div>
+</a>
+    </div>
       {% if foorloop.last %}
         <div class="col-md-12 empty">
           <i class="fas fa-images"></i>

@@ -86,7 +86,10 @@ align-items: center;
   flex-wrap: wrap;
 }
 .my-items{
-  width:30%;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  width:32.333333333%;
   margin-left: 10px;
 }
 .display-followers{
@@ -100,6 +103,7 @@ align-items: center;
   justify-content: center;
   align-items: center;
   visibility: hidden;
+  z-index: 10000
 }
 .people{
   background: white;
@@ -117,4 +121,25 @@ align-items: center;
 #followers,
 #following{
   cursor: pointer;
+}
+.content{
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index:1;
+  visibility: hidden;
+
+}
+.content i,
+.content span{
+  color:white;
+}
+.my-items:hover .content{
+  visibility: visible;
 }

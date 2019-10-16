@@ -42,6 +42,7 @@ body{
   background: white;
   right:0px;
   top:60px;
+  width:100%;
   z-index:-9999;
   display: none;
   border:.05px solid rgba(0, 0, 0, 0.5);
@@ -74,5 +75,31 @@ span.loader{
   }
   100%{
     transform:rotate(360deg);
+  }
+ }
+ .background-loader{
+   width:100%;
+   display: none;
+   height:3px;
+   background: rgba(0, 0, 200, 0.1);
+   position:relative;
+   position:fixed;
+ }
+ .load-item{
+   position:absolute;
+   width:0;
+   height:3px;
+   background: rgba(0, 0, 200, 0.7);
+   animation: load 2s ease-in-out infinite;
+ }
+ @keyframes load {
+   0%{
+     width:0;
+     left:-20%;
+}
+  100%{
+  width:100%;
+  left:100%;
+
   }
  }

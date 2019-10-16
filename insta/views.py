@@ -71,12 +71,21 @@ def profile(request,username):
         followers = Follow.objects.filter(following = current_user)
     except Exception as e:
         followers=[]
+    follow_status=None
+    for follower in followers:
+        if request.user == follower.follow:
+            print(True)
+            follow_status=True
+        else:
+            print(False)
+            follow_status=False
 
     context={
     'posts':images,
     'current_user':current_user,
     'followers':followers,
-    'following':following
+    'following':following,
+    'follow_status':follow_status
     }
     return render(request,'profile.html',context)
 
