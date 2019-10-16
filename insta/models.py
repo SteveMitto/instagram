@@ -72,6 +72,9 @@ class Profile(md.Model):
     def __str__(self):
         return f'{self.user.username}s profile'
 
+    @property
+    def followers(self):
+        return self.user.followers
 class Follow(md.Model):
     follow= md.ForeignKey(User ,on_delete=md.CASCADE , related_name='following')
     status=md.BooleanField(default=True)
