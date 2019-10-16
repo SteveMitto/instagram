@@ -1,5 +1,52 @@
 $(document).ready(function() {
-  console.log('like js');
+  $('body').click(function(){
+    $('.search-results').slideUp(300)
+  })
+  var searchInterval = null
+  $("#search").keyup(function(){
+
+    $("span.loader").show()
+    clearInterval(searchInterval)
+    searchInterval = setInterval(function(){
+
+    term = $("#search").val()
+    console.log(term);
+    $("span.loader").hide()
+    $.ajax({
+      method:'GET',
+      url:'search/'+term+'',
+      })
+      .done(function(data){
+        res =data.results
+        $('.search-results').empty()
+        if (res == []){
+            $('.search-results').hide()
+        }else{
+
+        for(i=0;i<res.length;i++){
+        $('.search-results').append(
+          '<li> <a href=/'+res[i].username+' target="_blank">'+
+              '<div class="row">'+
+                '<div class="col-md-3">'+
+                '<img src='+res[i].image+' width="45px" height="45px" class="circle" >'+
+                '</div>'+
+                '<div class="col-md-9">'+
+                '<h6 style="color:black">'+res[i].username+'</h6>'+
+                '<small style="color:gray">'+res[i].name+'</small>'+
+                "</div>"+
+              "</div>"+
+          '</a></li>'
+        )
+      }
+    }
+          $('.search-results').slideDown(300)
+        console.log('data.results');
+        console.table(data.results);
+      })
+      clearInterval(searchInterval)
+    },500)
+  })
+
   $("ul li .like-u").click(function() {
     var clicked = $(this)
     console.log(clicked);

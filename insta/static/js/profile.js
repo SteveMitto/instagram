@@ -15,7 +15,7 @@ $(document).ready(function() {
     $('.settings').css({'visibility':'visible'})
   })
   console.log('ready');
-  $("#unfollow").submit(function(event) {
+  $(".unfollow").click(function() {
     var you = $('#you').val()
     var me = $('#me').val()
     var form = $("#unfollow")
@@ -40,7 +40,6 @@ $(document).ready(function() {
           $("#followers strong").text(parseInt(followers) - 1)
         }
       });
-    event.preventDefault()
   });
 
   $(".follow").click(function() {
@@ -57,9 +56,7 @@ $(document).ready(function() {
         if (data.followed) {
           $(".follow-data").empty()
           $(".follow-data").append(
-            '<form id="unfollow">' +
-            '<button type="submit" id="unfollow_btn" class="edit btn" name="button"> <strong>Unfollow</strong></button>' +
-            '</form>'
+            '<button type="submit" id="unfollow" class=" unfollow edit btn" name="button"> <strong>Unfollow</strong></button>'
           )
           let followers = $("#followers strong").text()
           $("#followers strong").text(parseInt(followers) + 1)

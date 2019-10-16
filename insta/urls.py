@@ -11,7 +11,8 @@ urlpatterns = [
     path('like/<img_id>',views.like ,name='like'),
     path('comment/',views.comment,name='comment'),
     path('update/<username>',views.update_profile ,name= 'update_profile'),
-    path('update_pic/<username>',views.update_profile_pic , name = 'update_profile_pic')
+    path('update_pic/<username>',views.update_profile_pic , name = 'update_profile_pic'),
+    path('search/<search_term>',views.search)
 ]
 
 if settings.DEBUG:

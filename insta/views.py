@@ -5,6 +5,11 @@ from .models import Image,Like,Comment,Profile,Tags,Follow
 from django.http import JsonResponse
 from .forms import UpdateProfile,UpdateProfilePhoto,PostImage
 # Create your views here.
+from django.contrib.auth.decorators import login_required
+from django import template
+import json
+register = template.Library()
+@login_required
 def home(request):
     images=Image.objects.all()
     following = Follow.objects.filter(follow = request.user)
@@ -30,6 +35,7 @@ def home(request):
     }
     return render(request,'index.html',context)
 
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -47,8 +53,15 @@ def signup(request):
 def profile(request,username):
     current_user = User.objects.filter(username = username).first()
     images = Image.objects.all()
-    following = Follow.objects.filter(follow = current_user)
-    followers = Follow.objects.filter(following = current_user)
+    try:
+        following = Follow.objects.filter(follow = current_user).all()
+    except:
+        following =[]
+
+    try:
+        followers = Follow.objects.filter(following = current_user)
+    except Exception as e:
+        followers=[]
 
     context={
     'posts':images,
@@ -58,6 +71,7 @@ def profile(request,username):
     }
     return render(request,'profile.html',context)
 
+@login_required
 def unfollow(request):
     if request.method == 'POST':
         me= request.POST['me']
@@ -67,6 +81,7 @@ def unfollow(request):
         return JsonResponse({'unfollowed':True})
     return redirect('home')
 
+@login_required
 def follow(request):
     if request.method == 'POST':
         me= request.POST['me']
@@ -76,6 +91,7 @@ def follow(request):
         return JsonResponse({'followed':True})
     return redirect('home')
 
+@login_required
 def like(request,img_id):
     if request.method == 'GET':
         image = Image.objects.get(pk=img_id)
@@ -84,13 +100,16 @@ def like(request,img_id):
         if already_liked == None:
             liked= Like( image = image, person = request.user)
             liked.save()
+            print('********1*********')
             return JsonResponse({'img_id':img_id,'status':True})
         else:
+            print('********2*********')
             already_liked.delete()
             return JsonResponse({'img_id':img_id,'status':False})
 
         print(already_liked)
 
+@login_required
 def comment(request):
     if request.method == 'GET':
         image = Image.objects.get(pk = request.GET['imageId'])
@@ -99,6 +118,7 @@ def comment(request):
         comment_s.save()
         return JsonResponse({'image_id': request.GET['imageId'],'user':request.user.username,'comment':commnent})
 
+@login_required
 def update_profile(request,username):
     if request.method == 'POST':
         user = request.user
@@ -125,6 +145,8 @@ def update_profile(request,username):
     }
 
     return render(request,'edit-profile.html',context)
+
+@login_required
 def update_profile_pic(request,username):
     if request.method == 'POST':
         form =UpdateProfilePhoto(request.POST,request.FILES)
@@ -140,3 +162,18 @@ def update_profile_pic(request,username):
             return redirect('profile',username)
     else:
             return redirect('profile',username)
+
+def search(request,search_term):
+    results = list(User.objects.filter(username__icontains = search_term))
+    res=[]
+    for i in results:
+        username = i.username
+        image = json.dumps("/media/"+str(i.profile.profile_pic))
+        name = i.profile.name
+        data ={
+        'username':username,
+        'image':image,
+        'name':name
+        }
+        res.append(data)
+    return JsonResponse({'results':res})

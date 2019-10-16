@@ -37,3 +37,42 @@ body{
 .flexx3 a svg{
   margin:0 0 0 30px;
 }
+.search-results{
+  position: absolute;
+  background: white;
+  right:0px;
+  top:60px;
+  z-index:-9999;
+  display: none;
+  border:.05px solid rgba(0, 0, 0, 0.5);
+  border-width:.5px .5px .5px .5px;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 10px rgba(0,0,0,.2);
+  overflow: auto;
+  list-style: none;
+
+}
+.search-results li:hover{
+background-color: rgba(0,0,0,.03)
+}
+span.loader{
+  display :none;
+  position:relative;
+  right:20px;
+  width:15px;
+  min-width: 15px;
+  min-height: 15px;
+  height:15px;
+  border:2px solid lightgray;
+  border-top:2px solid  rgba(0,0,200,.9);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+ }
+ @keyframes spin {
+  0%{
+    transform:rotate(0deg);
+  }
+  100%{
+    transform:rotate(360deg);
+  }
+ }

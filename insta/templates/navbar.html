@@ -1,3 +1,5 @@
+{% load static%}
+<link rel="stylesheet" href="{% static 'css/index.css'%}">
 <div class="container-fluid sticky-top top">
   <div class="row">
 
@@ -13,7 +15,12 @@
   </div>
 
   <div class="col-md-4 flexx2">
-    <input type="text" name="search" id="search" placeholder="  Search" value="">
+    <input type="text" id="search" placeholder=" Search" autocomplete="off"> <span class="loader"></span>
+    <div class="container search-results">
+      <p class="text-center">result</p>
+      <ul  style="list-style:none">
+      </ul>
+    </div>
   </div>
   <div class="col-md-4 flexx3">
     <a href="#">
@@ -28,3 +35,4 @@
   </div>
 </div>
 </div>
+<!-- <script type="text/javascript" src="{% static 'js/index.js'%}"></script> -->
