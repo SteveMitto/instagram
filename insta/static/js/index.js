@@ -6,6 +6,8 @@ $(document).ajaxStart(function(){
 $(document).ajaxStop(function(){
   $(' .background-loader').hide()
 })
+
+$()
   $('body').click(function(){
     $('.search-results').slideUp(300)
   })
