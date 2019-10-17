@@ -84,6 +84,7 @@ span.loader{
    background: rgba(0, 0, 200, 0.1);
    position:relative;
    position:fixed;
+   z-index: 19;
  }
  .load-item{
    position:absolute;
